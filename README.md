@@ -12,7 +12,7 @@
 | [/profile](#set-profile-picture-with-nft)                     | `POST` | Set profile picture with NFT                                   |
 
 
-### Request for Phone Authentication
+## Request for Phone Authentication
 
 Request to authenticate phone number. If phone number is valid, a 6-digit verification code expired in 5 minutes will be sent via sms.
 If you want to receive a newly generated verification code (whatever the reason is), you can request again, and then the previous code will be expired. 
@@ -46,7 +46,7 @@ The `teleco_code` can be one of `SKT`, `KT`, `LGU`, `SKTMVNO`, `KTMVNO`, `LGUMVN
   - Code: 400
     - Content: `invalid phone number`
 
-### Authenticate Phone
+## Authenticate Phone
 
 Authenticate the phone user has using the verification code.
 
@@ -76,7 +76,7 @@ Authenticate the phone user has using the verification code.
       - `invalid verification code`
       - `verification code expired`
 
-### Register Account Address
+## Register Account Address
 
 Request to register account address under the phone number.
 
@@ -119,7 +119,7 @@ The message for signing would be like below:
   - Code: 401
     - Content: `invalid siganture` (in advanced implementation)
 
-### Get Account Address by Phone Number
+## Get Account Address by Phone Number
 
 Get account address by phone number.
 
@@ -145,7 +145,7 @@ Get account address by phone number.
   - Code: 404
     - Content: `not found under the phone number`
 
-### Send Asset to Escrow
+## Send Asset to Escrow
 
 When sending an asset to a user who is not registered to cryptoss, the asset is sent to escrow.
 When the receiver register to cryptoss, the asset will be sent to the receiver.
@@ -176,7 +176,7 @@ the unit of amount in `Octa` which is 10^-8 `APT`
 
 - Error Response
 
-### Set Profile Picture with NFT
+## Set Profile Picture with NFT
 
 Set profile picture with a NFT owned by user.
 

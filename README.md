@@ -35,6 +35,8 @@ If you want to receive a newly generated verification code (whatever the reason 
 }
 ```
 
+The `teleco_code` can be one of `SKT`, `KT`, `LGU`, `SKTMVNO`, `KTMVNO`, `LGUMVNO`
+
 - Success Response
   - Code: 201
     - Content: `{"verification_code": "000000"}`

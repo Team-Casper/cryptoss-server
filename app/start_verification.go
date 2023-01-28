@@ -25,7 +25,7 @@ func (a *App) StartVerification(w http.ResponseWriter, r *http.Request) {
 	var reqBody VerificationStartReq
 
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
-		log.Errorf("failed to decode request body (%v): %v", r.Body, err)
+		log.Errorf("failed to decode request body: %v", err)
 		http.Error(w, "failed to decode request body", http.StatusBadRequest)
 		return
 	}

@@ -38,7 +38,7 @@ func (a *App) InitializeRoutes() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/verification/start", a.StartVerification).Methods(http.MethodPost)
-	router.HandleFunc("/verification/check", a.CheckVerification).Methods(http.MethodGet)
+	router.HandleFunc("/verification/check", a.CheckVerification).Methods(http.MethodPost)
 	router.HandleFunc("/address", a.RegisterAddress).Methods(http.MethodPost)
 	router.HandleFunc("/address/{phone-number}", a.GetAddress).Methods(http.MethodGet)
 	router.HandleFunc("/send-coin", a.SendCoin).Methods(http.MethodPost)
@@ -52,7 +52,7 @@ func (a *App) InitializeRoutes() {
 	}
 }
 
-func (a *App) Run() error {
+func (a *App) Start() error {
 	log.Infof("Cryptoss server is started: %s", a.Conf.ListeningAddr)
 	return a.Srv.ListenAndServe()
 }

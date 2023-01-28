@@ -68,7 +68,7 @@ Authenticate the phone user has using the verification code.
 ```
 
 - Success Response
-  - Code: 200
+  - Code: 201
 
 - Error Response
   - Code: 401

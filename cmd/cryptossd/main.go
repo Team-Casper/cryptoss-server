@@ -22,7 +22,7 @@ func main() {
 	sigChan := make(chan os.Signal, 1)
 
 	go func() {
-		if err := cryptossApp.Run(); err != nil {
+		if err := cryptossApp.Start(); err != nil {
 			if !errors.Is(err, http.ErrServerClosed) {
 				errChan <- err
 			} else {

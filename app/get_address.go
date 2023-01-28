@@ -1,4 +1,4 @@
-package handler
+package app
 
 import (
 	"encoding/json"
@@ -13,7 +13,7 @@ type Address struct {
 	Addr string `json:"address"`
 }
 
-func GetAddress(w http.ResponseWriter, r *http.Request) {
+func (a *App) GetAddress(w http.ResponseWriter, r *http.Request) {
 	log.Infof("phone number is %s", mux.Vars(r)["phone-number"])
 
 	address := &Address{

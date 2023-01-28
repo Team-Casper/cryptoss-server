@@ -13,7 +13,7 @@ import (
 func main() {
 	cryptossApp, err := app.New()
 	if err != nil {
-		log.Errorf("failed to create new cryptss server app: %w", err)
+		log.Errorf("failed to create new cryptoss server app: %w", err)
 	}
 
 	cryptossApp.InitializeRoutes()

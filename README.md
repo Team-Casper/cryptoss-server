@@ -5,7 +5,7 @@
 | URL                                                           | Method | Description                                                    |
 |---------------------------------------------------------------|--------|----------------------------------------------------------------|
 | [/verification/start](#request-for-phone-authentication)      | `POST` | Request for phone authentication                               |
-| [/verification/check](#authenticate-phone)                    | `GET`  | Authenticate the phone using verification code                 |
+| [/verification/check](#authenticate-phone)                    | `POST` | Authenticate the phone using verification code                 |
 | [/address](#register-account-address)                         | `POST` | Register account address under phone number                    |
 | [/address/phone-number](#get-account-address-by-phone-number) | `GET`  | Get account address by phone number                            |
 | [/send-coin](#send-asset-to-escrow)                           | `POST` | Send coin to unregisterd user. The coin will be sent to escrow |
@@ -30,13 +30,14 @@ If you want to receive a newly generated verification code (whatever the reason 
 ```json
 {
   "nickname": "<nickname>",
-  "phone-number": "01012345678",
-  "carrier": "SKT"
+  "phone_number": "01012345678",
+  "teleco_code": "SKT"
 }
 ```
 
 - Success Response
   - Code: 201
+    - Content: `{"verification_code": "000000"}`
 
 
 - Error Response
@@ -53,7 +54,7 @@ Authenticate the phone user has using the verification code.
 
 - Method
 
-`GET`
+`POST`
 
 - Data Params
 

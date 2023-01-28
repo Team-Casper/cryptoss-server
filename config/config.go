@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"os"
-	"path"
 )
 
 type Config struct {
@@ -17,15 +16,8 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	pwd, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
-
-	envPath := path.Join(pwd, ".env")
-
-	if err = godotenv.Load(envPath); err != nil {
-		return nil, fmt.Errorf("failed to load .env file(%s): %w", envPath, err)
+	if err := godotenv.Load(".env"); err != nil {
+		return nil, fmt.Errorf("failed to load .env file: %w", err)
 	}
 
 	return &Config{

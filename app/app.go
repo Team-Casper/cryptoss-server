@@ -41,7 +41,7 @@ func (a *App) InitializeRoutes() {
 	router.HandleFunc("/verification/check", a.HandleCheckVerification).Methods(http.MethodPost)
 	router.HandleFunc("/account/address", a.HandleRegisterAddress).Methods(http.MethodPost)
 	router.HandleFunc("/account/{phone-number}", a.HandleGetAccount).Methods(http.MethodGet)
-	router.HandleFunc("/send-coin", a.HandleSendCoin).Methods(http.MethodPost)
+	router.HandleFunc("/escrow", a.HandleSendToEscrow).Methods(http.MethodPost)
 	router.HandleFunc("/profile", a.HandleSetProfile).Methods(http.MethodPost)
 
 	a.Srv = &http.Server{

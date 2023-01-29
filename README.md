@@ -2,14 +2,14 @@
 
 ## API
 
-| URL                                                             | Method | Description                                                    |
-|-----------------------------------------------------------------|--------|----------------------------------------------------------------|
-| [/verification/start](#request-for-phone-authentication)        | `POST` | Request for phone authentication                               |
-| [/verification/check](#authenticate-phone)                      | `POST` | Authenticate the phone using verification code                 |
-| [/account/address](#register-account-address)                   | `POST` | Register account address under the phone number                |
-| [/account/{phone-number}](#get-account-by-phone-number) | `GET`  | Get account by phone number                            |
-| [/send-coin](#send-asset-to-escrow)                             | `POST` | Send coin to unregisterd user. The coin will be sent to escrow |
-| [/profile](#set-profile-picture-with-nft)                       | `POST` | Set profile picture with NFT                                   |
+| URL                                                      | Method | Description                                                    |
+|----------------------------------------------------------|--------|----------------------------------------------------------------|
+| [/verification/start](#request-for-phone-authentication) | `POST` | Request for phone authentication                               |
+| [/verification/check](#authenticate-phone)               | `POST` | Authenticate the phone using verification code                 |
+| [/account/address](#register-account-address)            | `POST` | Register account address under the phone number                |
+| [/account/{phone-number}](#get-account-by-phone-number)  | `GET`  | Get account by phone number                            |
+| [/escrow](#send-asset-to-escrow)                         | `POST` | Send coin to unregisterd user. The coin will be sent to escrow |
+| [/profile](#set-profile-picture-with-nft)                | `POST` | Set profile picture with NFT                                   |
 
 
 ## Request for Phone Authentication
@@ -62,7 +62,7 @@ Authenticate the phone user has using the verification code.
 
 ```json
 {
-  "phone-number": "01012345678",
+  "phone_number": "01012345678",
   "verification-code": "123456"
 }
 ```
@@ -92,7 +92,7 @@ Request to register account address to cryptoss account.
 
 ```json
 {
-  "phone-number": "01012345678",
+  "phone_number": "01012345678",
   "address": "0xa1b2c3d4..."
 }
 ```
@@ -140,7 +140,7 @@ However, if the receiver do not register to cryptoss in x-days, the asset will b
 
 - URL
 
-`/send-coin`
+`/escrow`
 
 - Method
 
@@ -152,8 +152,8 @@ the unit of amount in `Octa` which is 10^-8 `APT`
 
 ```json
 {
-  "sender-phone-number": "01012345678",
-  "receiver-phone-number": "01098765432",
+  "sender_phone-number": "01012345678",
+  "receiver_phone_number": "01098765432",
   "amount": 100000000
 }
 ```

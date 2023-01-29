@@ -3,6 +3,7 @@ package types
 var (
 	VerificationKey = []byte{0x01}
 	AccountKey      = []byte{0x02}
+	DepositKey      = []byte{0x03}
 )
 
 func GetVerificationKey(phoneNumber string) []byte {
@@ -11,4 +12,8 @@ func GetVerificationKey(phoneNumber string) []byte {
 
 func GetAccountKey(phoneNumber string) []byte {
 	return append(AccountKey, []byte(phoneNumber)...)
+}
+
+func GetDepositKey(phoneNumber string) []byte {
+	return append(DepositKey, []byte(phoneNumber)...)
 }

@@ -47,5 +47,22 @@ func (a *App) HandleRegisterAddress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// if deposit exists, send asset to the account
+	if a.HasClaimableDeposit(reqBody.PhoneNumber) {
+		// send deposit to account
+		deposit, err := a.GetDeposit(reqBody.PhoneNumber)
+		if err != nil {
+			log.Errorf("failed to get deposit under %s: %v", reqBody.PhoneNumber, err)
+			http.Error(w, "failed to get deposit", http.StatusInternalServerError)
+			return
+		}
+
+		if err := a.WithdrawDeposit(deposit); err != nil {
+			log.Errorf("failed to send deposit: %v", err)
+			http.Error(w, "failed to send deposit", http.StatusInternalServerError)
+			return
+		}
+	}
+
 	w.WriteHeader(http.StatusCreated)
 }

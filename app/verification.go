@@ -10,6 +10,15 @@ import (
 func (a *App) GetVerification(phoneNumber string) (*types.Verification, error) {
 	key := types.GetVerificationKey(phoneNumber)
 
+	has, err := a.DB.Has(key, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check if DB has the verification: %w", err)
+	}
+
+	if !has {
+		return nil, fmt.Errorf("verification not found by the phone number")
+	}
+
 	bz, err := a.DB.Get(key, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error occurs while getting verification: %w", err)

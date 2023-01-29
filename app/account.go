@@ -9,6 +9,15 @@ import (
 func (a *App) GetAccount(phoneNumber string) (*types.Account, error) {
 	key := types.GetAccountKey(phoneNumber)
 
+	has, err := a.DB.Has(key, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check if DB has the account: %w", err)
+	}
+
+	if !has {
+		return nil, fmt.Errorf("account not found by the phone number")
+	}
+
 	bz, err := a.DB.Get(key, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error occurs while getting account: %w", err)

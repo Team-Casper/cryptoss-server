@@ -78,19 +78,7 @@ Authenticate the phone user has using the verification code.
 
 ## Register Account Address
 
-Request to register account address under the phone number.
-
-**[Advancement - not important for now]**
-
-To prove that the user really owns the account and register the account under the phone number, a digital signature signed by the private key should also be included.
-The message for signing would be like below:
-
-```json
-{
-  "phone-number": "01012345678",
-  "address": "0xa1b2c3d4..."
-}
-```
+Request to register account address to cryptoss account.
 
 - URL
 
@@ -102,13 +90,10 @@ The message for signing would be like below:
 
 - Data Params
 
-`sig` will not be implemented for now, but if possible, it would be good to add.
-
 ```json
 {
   "phone-number": "01012345678",
-  "address": "0xa1b2c3d4...",
-  "sig": "<base64-encoded-signature>"
+  "address": "0xa1b2c3d4..."
 }
 ```
 
@@ -117,7 +102,9 @@ The message for signing would be like below:
 
 - Error Response
   - Code: 401
-    - Content: `invalid siganture` (in advanced implementation)
+    - Content: `invalid phone number`
+  - Code: 404
+    - Content: `account not found by the phone number`
 
 ## Get Account Address by Phone Number
 

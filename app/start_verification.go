@@ -20,7 +20,7 @@ type VerificationStartResp struct {
 	VerificationCode string `json:"verification_code"`
 }
 
-func (a *App) StartVerification(w http.ResponseWriter, r *http.Request) {
+func (a *App) HandleStartVerification(w http.ResponseWriter, r *http.Request) {
 	// get request body
 	var reqBody VerificationStartReq
 

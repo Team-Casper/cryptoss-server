@@ -37,12 +37,12 @@ func New() (*App, error) {
 func (a *App) InitializeRoutes() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/verification/start", a.StartVerification).Methods(http.MethodPost)
-	router.HandleFunc("/verification/check", a.CheckVerification).Methods(http.MethodPost)
-	router.HandleFunc("/address", a.RegisterAddress).Methods(http.MethodPost)
-	router.HandleFunc("/address/{phone-number}", a.GetAddress).Methods(http.MethodGet)
-	router.HandleFunc("/send-coin", a.SendCoin).Methods(http.MethodPost)
-	router.HandleFunc("/profile", a.SetProfile).Methods(http.MethodPost)
+	router.HandleFunc("/verification/start", a.HandleStartVerification).Methods(http.MethodPost)
+	router.HandleFunc("/verification/check", a.HandleCheckVerification).Methods(http.MethodPost)
+	router.HandleFunc("/account/address", a.HandleRegisterAddress).Methods(http.MethodPost)
+	router.HandleFunc("/account/{phone-number}", a.HandleGetAccount).Methods(http.MethodGet)
+	router.HandleFunc("/send-coin", a.HandleSendCoin).Methods(http.MethodPost)
+	router.HandleFunc("/profile", a.HandleSetProfile).Methods(http.MethodPost)
 
 	a.Srv = &http.Server{
 		Handler:      router,

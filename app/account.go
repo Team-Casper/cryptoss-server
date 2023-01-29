@@ -24,7 +24,7 @@ func (a *App) GetAccount(phoneNumber string) (*types.Account, error) {
 	}
 
 	var account *types.Account
-	if err := json.Unmarshal(bz, account); err != nil {
+	if err := json.Unmarshal(bz, &account); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal account data: %w", err)
 	}
 

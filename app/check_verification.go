@@ -14,7 +14,7 @@ type VerificationCheckReq struct {
 	VerificationCode string `json:"verification_code"`
 }
 
-func (a *App) CheckVerification(w http.ResponseWriter, r *http.Request) {
+func (a *App) HandleCheckVerification(w http.ResponseWriter, r *http.Request) {
 	// get request body
 	var reqBody VerificationCheckReq
 

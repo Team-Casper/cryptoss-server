@@ -4,6 +4,6 @@ import (
 	"net/http"
 )
 
-func (a *App) SetProfile(w http.ResponseWriter, r *http.Request) {
+func (a *App) HandleSetProfile(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }

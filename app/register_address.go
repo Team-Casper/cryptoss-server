@@ -12,7 +12,7 @@ type RegisterAddressReq struct {
 	Address     string `json:"address"`
 }
 
-func (a *App) RegisterAddress(w http.ResponseWriter, r *http.Request) {
+func (a *App) HandleRegisterAddress(w http.ResponseWriter, r *http.Request) {
 	// get request body
 	var reqBody RegisterAddressReq
 

@@ -2,9 +2,10 @@ package app
 
 import (
 	"encoding/json"
+	"net/http"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/team-casper/cryptoss-server/util"
-	"net/http"
 )
 
 type RegisterAddressReq struct {
@@ -57,7 +58,7 @@ func (a *App) HandleRegisterAddress(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if err := a.WithdrawDeposit(deposit); err != nil {
+		if err := a.WithdrawDeposit(reqBody.PhoneNumber, deposit); err != nil {
 			log.Errorf("failed to send deposit: %v", err)
 			http.Error(w, "failed to send deposit", http.StatusInternalServerError)
 			return

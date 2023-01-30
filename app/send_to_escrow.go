@@ -2,11 +2,12 @@ package app
 
 import (
 	"encoding/json"
+	"net/http"
+	"strconv"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/team-casper/cryptoss-server/types"
 	"github.com/team-casper/cryptoss-server/util"
-	"net/http"
-	"strconv"
 )
 
 type SendToEscrowReq struct {

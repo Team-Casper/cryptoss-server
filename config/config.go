@@ -13,6 +13,9 @@ type Config struct {
 	SMSEndpoint   string
 	AccessKeyId   string
 	SecretKey     string
+	EscrowSeed    string // 0x...
+	AptosEndpoint string
+	AptosChainID  string
 }
 
 func LoadConfig() (*Config, error) {
@@ -27,5 +30,8 @@ func LoadConfig() (*Config, error) {
 		SMSEndpoint:   os.Getenv("SMS_ENDPOINT"),
 		AccessKeyId:   os.Getenv("NCP_ACCESS_KEY_ID"),
 		SecretKey:     os.Getenv("NCP_SECRET_KEY"),
+		EscrowSeed:    os.Getenv("ESCROW_SEED"),
+		AptosEndpoint: os.Getenv("APTOS_ENDPOINT"),
+		AptosChainID:  os.Getenv("APTOS_CHAIN_ID"),
 	}, nil
 }

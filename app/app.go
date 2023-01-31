@@ -2,19 +2,32 @@ package app
 
 import (
 	"context"
+	"crypto/ed25519"
+	"encoding/hex"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/portto/aptos-go-sdk/client"
+	"github.com/portto/aptos-go-sdk/models"
 	log "github.com/sirupsen/logrus"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/team-casper/cryptoss-server/config"
 	"net/http"
+	"strconv"
+	"strings"
 	"time"
 )
 
+type AptosAcc struct {
+	Address string
+	Signer  models.SingleSigner
+}
 type App struct {
-	DB   *leveldb.DB
-	Conf *config.Config
-	Srv  *http.Server
+	DB        *leveldb.DB
+	Conf      *config.Config
+	Srv       *http.Server
+	AptosCli  client.AptosClient
+	EscrowAcc AptosAcc
+	ChainID   uint8
 }
 
 func New() (*App, error) {
@@ -28,9 +41,30 @@ func New() (*App, error) {
 		return nil, fmt.Errorf("error occurs while opening db (%s): %w", conf.DBPath, err)
 	}
 
+	aptosCli := client.NewAptosClient(conf.AptosEndpoint)
+
+	escrowSeed, err := hex.DecodeString(strings.TrimPrefix(conf.EscrowSeed, "0x"))
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode escrow seed")
+	}
+
+	escrowPrivKey := ed25519.NewKeyFromSeed(escrowSeed)
+	escrowSigner := models.NewSingleSigner(escrowPrivKey)
+
+	chainIDUint64, err := strconv.ParseUint(conf.AptosChainID, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse chain ID")
+	}
+
 	return &App{
-		Conf: conf,
-		DB:   db,
+		Conf:     conf,
+		DB:       db,
+		AptosCli: aptosCli,
+		EscrowAcc: AptosAcc{
+			Address: hex.EncodeToString(escrowSigner.AccountAddress[:]),
+			Signer:  escrowSigner,
+		},
+		ChainID: uint8(chainIDUint64),
 	}, nil
 }
 

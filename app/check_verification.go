@@ -54,7 +54,7 @@ func (a *App) HandleCheckVerification(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set account
-	newAccount := types.NewAccount(verification.Nickname, "")
+	newAccount := types.NewAccount(verification.Nickname, "", "")
 	if err := a.SetAccount(reqBody.PhoneNumber, newAccount); err != nil {
 		log.Errorf("failed to set account by the phone number of %s: %v", reqBody.PhoneNumber, err)
 		http.Error(w, "failed to set account", http.StatusInternalServerError)

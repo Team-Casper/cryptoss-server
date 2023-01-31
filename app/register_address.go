@@ -1,8 +1,10 @@
 package app
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/team-casper/cryptoss-server/util"
@@ -11,6 +13,7 @@ import (
 type RegisterAddressReq struct {
 	PhoneNumber string `json:"phone_number"`
 	Address     string `json:"address"`
+	PubKeyHex   string `json:"pub_key_hex"`
 }
 
 func (a *App) HandleRegisterAddress(w http.ResponseWriter, r *http.Request) {
@@ -39,8 +42,15 @@ func (a *App) HandleRegisterAddress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(reqBody.PubKeyHex) == 0 {
+		log.Errorf("public key is empty")
+		http.Error(w, "public key is empty", http.StatusBadRequest)
+		return
+	}
+
 	// TODO: check validity of address
 	account.Address = reqBody.Address
+	account.PubKeyHex = reqBody.PubKeyHex
 
 	if err := a.SetAccount(reqBody.PhoneNumber, account); err != nil {
 		log.Errorf("failed to set account: %v", err)
@@ -58,7 +68,15 @@ func (a *App) HandleRegisterAddress(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if err := a.WithdrawDeposit(reqBody.PhoneNumber, deposit); err != nil {
+		pubKeyStr := strings.TrimPrefix(reqBody.PubKeyHex, "0x")
+		receiverPubKey, err := hex.DecodeString(pubKeyStr)
+		if err != nil {
+			log.Errorf("failed to decode pub key(%s): %v", reqBody.PubKeyHex, err)
+			http.Error(w, "failed to decode pub key", http.StatusInternalServerError)
+			return
+		}
+
+		if err := a.TransferCoin(reqBody.PhoneNumber, receiverPubKey, deposit.Amount); err != nil {
 			log.Errorf("failed to send deposit: %v", err)
 			http.Error(w, "failed to send deposit", http.StatusInternalServerError)
 			return

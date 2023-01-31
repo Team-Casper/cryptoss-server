@@ -43,6 +43,7 @@ func (a *App) InitializeRoutes() {
 	router.HandleFunc("/account/{phone-number}", a.HandleGetAccount).Methods(http.MethodGet)
 	router.HandleFunc("/escrow", a.HandleSendToEscrow).Methods(http.MethodPost)
 	router.HandleFunc("/profile", a.HandleSetProfile).Methods(http.MethodPost)
+	router.HandleFunc("/reset", a.HandleResetAccount).Methods(http.MethodPost)
 
 	a.Srv = &http.Server{
 		Handler:      router,

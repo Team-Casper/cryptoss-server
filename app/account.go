@@ -45,3 +45,7 @@ func (a *App) SetAccount(phoneNumber string, account *types.Account) error {
 
 	return nil
 }
+
+func (a *App) DeleteAccount(phoneNumber string) error {
+	return a.DB.Delete(types.GetAccountKey(phoneNumber), nil)
+}

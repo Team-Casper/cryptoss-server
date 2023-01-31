@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/portto/aptos-go-sdk/client"
@@ -38,22 +37,22 @@ func (a *App) WithdrawDeposit(receiverAddress string, deposit *types.Deposit) er
 		return fmt.Errorf("failed to create aptos client: %w", err)
 	}
 
-	ctx := context.Background()
+	//ctx := context.Background()
 
-	receiverAccount, err := aptosClient.GetAccount(ctx, receiverAddress)
-	if err != nil {
-		return fmt.Errorf("failed to get receiver account: %w", err)
-	}
+	//receiverAccount, err := aptosClient.GetAccount(ctx, receiverAddress)
+	//if err != nil {
+	//	return fmt.Errorf("failed to get receiver account: %w", err)
+	//}
 
-	escrowAccount, err := aptosClient.GetAccount(ctx, escrowAddress)
-	if err != nil {
-		return fmt.Errorf("failed to get escrow account: %w", err)
-	}
-
-	tx := models.Transaction{}
-	err = tx.SetChainID(TestnetChainID).
-		SetSender(escrowAddress).
-		SetPayload(getTransferPayload(receiverAccount, deposit.Amount))
+	//escrowAccount, err := aptosClient.GetAccount(ctx, escrowAddress)
+	//if err != nil {
+	//	return fmt.Errorf("failed to get escrow account: %w", err)
+	//}
+	//
+	//tx := models.Transaction{}
+	//err = tx.SetChainID(TestnetChainID).
+	//	SetSender(escrowAddress).
+	//	SetPayload(getTransferPayload(receiverAccount, deposit.Amount))
 
 	return nil
 }

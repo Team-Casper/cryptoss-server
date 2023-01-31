@@ -45,3 +45,7 @@ func (a *App) SetVerification(phoneNumber string, verification *types.Verificati
 
 	return nil
 }
+
+func (a *App) DeleteVerification(phoneNumber string) error {
+	return a.DB.Delete(types.GetVerificationKey(phoneNumber), nil)
+}

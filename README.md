@@ -7,9 +7,10 @@
 | [/verification/start](#request-for-phone-authentication) | `POST` | Request for phone authentication                               |
 | [/verification/check](#authenticate-phone)               | `POST` | Authenticate the phone using verification code                 |
 | [/account/address](#register-account-address)            | `POST` | Register account address under the phone number                |
-| [/account/{phone-number}](#get-account-by-phone-number)  | `GET`  | Get account by phone number                            |
+| [/account/{phone-number}](#get-account-by-phone-number)  | `GET`  | Get account by phone number                                    |
 | [/escrow](#send-asset-to-escrow)                         | `POST` | Send coin to unregisterd user. The coin will be sent to escrow |
 | [/profile](#set-profile-picture-with-nft)                | `POST` | Set profile picture with NFT                                   |
+| [/reset](#reset-account)                                 | `POST` | reset account                                                  |
 
 
 ## Request for Phone Authentication
@@ -185,3 +186,28 @@ TBD
 - Error Response
   - Code: 401
     - Content: `unauthorized for NFT`
+
+## Reset Account
+
+Reset account by phone number
+
+- URL
+
+`/reset`
+
+- Method
+
+`POST`
+
+- Data Params
+
+```json
+{
+  "phone_number": "01012345678"
+}
+```
+
+- Success Response
+  - Code: 201
+
+- Error Response

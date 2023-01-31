@@ -52,3 +52,7 @@ func (a *App) HasClaimableDeposit(phoneNumber string) bool {
 	has, _ := a.DB.Has(key, nil)
 	return has
 }
+
+func (a *App) DeleteDeposit(phoneNumber string) error {
+	return a.DB.Delete(types.GetDepositKey(phoneNumber), nil)
+}

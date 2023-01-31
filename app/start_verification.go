@@ -61,7 +61,8 @@ func (a *App) HandleStartVerification(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// send sms
-	if err := sms.Send(a.Conf, reqBody.PhoneNumber, code); err != nil {
+	msgContent := sms.GetVerificationMsgContent(code)
+	if err := sms.Send(a.Conf, reqBody.PhoneNumber, msgContent); err != nil {
 		log.Errorf("failed to send sms to %s: %v", reqBody.PhoneNumber, err)
 		http.Error(w, "failed to send sms", http.StatusInternalServerError)
 		return

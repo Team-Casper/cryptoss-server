@@ -14,8 +14,8 @@ import (
 	"time"
 )
 
-func Send(conf *config.Config, to, code string) error {
-	body := CreateSMSMsg(conf.FromNumber, to, code)
+func Send(conf *config.Config, to, msgContent string) error {
+	body := CreateSMSMsg(conf.FromNumber, to, msgContent)
 
 	dataParams, err := json.Marshal(body)
 	if err != nil {

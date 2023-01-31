@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/team-casper/cryptoss-server/sms"
 	"net/http"
 	"strconv"
 
@@ -55,6 +56,21 @@ func (a *App) HandleSendToEscrow(w http.ResponseWriter, r *http.Request) {
 	if err := a.SetDeposit(reqBody.ReceiverPhoneNumber, newDeposit); err != nil {
 		log.Errorf("failed to set deposit under the phone number(%s): %v", reqBody.ReceiverPhoneNumber, err)
 		http.Error(w, "failed to set deposit", http.StatusInternalServerError)
+		return
+	}
+
+	// send sms to receiver
+	sender, err := a.GetAccount(reqBody.SenderPhoneNumber)
+	if err != nil {
+		log.Errorf("failed to get sender account: %v", err)
+		http.Error(w, "failed to get sender account", http.StatusInternalServerError)
+		return
+	}
+
+	msgContent := sms.GetInvitationMsgContent(sender.Nickname, reqBody.SenderPhoneNumber, newDeposit.Amount)
+	if err := sms.Send(a.Conf, reqBody.ReceiverPhoneNumber, msgContent); err != nil {
+		log.Errorf("failed to send sms to %s: %v", reqBody.ReceiverPhoneNumber, err)
+		http.Error(w, "failed to send sms", http.StatusInternalServerError)
 		return
 	}
 

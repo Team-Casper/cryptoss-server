@@ -64,7 +64,7 @@ Authenticate the phone user has using the verification code.
 ```json
 {
   "phone_number": "01012345678",
-  "verification-code": "123456"
+  "verification_code": "123456"
 }
 ```
 
@@ -178,7 +178,16 @@ Set profile picture with a NFT owned by user.
 
 - Data Params
 
-TBD
+```json
+{
+  "phone_number": "01012345678",
+  "profile_id": {
+    "creator": "0xabc..",
+    "collection": "collection name",
+    "name": "token name"
+  }
+}
+```
 
 - Success Response
   - Code: 201

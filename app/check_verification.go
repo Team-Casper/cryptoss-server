@@ -2,11 +2,12 @@ package app
 
 import (
 	"encoding/json"
+	"net/http"
+	"strings"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/team-casper/cryptoss-server/types"
 	"github.com/team-casper/cryptoss-server/util"
-	"net/http"
-	"strings"
 )
 
 type VerificationCheckReq struct {
@@ -54,7 +55,7 @@ func (a *App) HandleCheckVerification(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set account
-	newAccount := types.NewAccount(verification.Nickname, "", "")
+	newAccount := types.NewAccount(verification.Nickname, "")
 	if err := a.SetAccount(reqBody.PhoneNumber, newAccount); err != nil {
 		log.Errorf("failed to set account by the phone number of %s: %v", reqBody.PhoneNumber, err)
 		http.Error(w, "failed to set account", http.StatusInternalServerError)

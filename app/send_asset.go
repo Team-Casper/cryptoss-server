@@ -3,11 +3,11 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/portto/aptos-go-sdk/crypto"
-	"github.com/portto/aptos-go-sdk/models"
-	log "github.com/sirupsen/logrus"
 	"strings"
 	"time"
+
+	"github.com/portto/aptos-go-sdk/models"
+	log "github.com/sirupsen/logrus"
 )
 
 var addr0x1 models.AccountAddress
@@ -22,7 +22,7 @@ func init() {
 	}
 }
 
-func (a *App) TransferCoin(receiverAddress string, receiverPubKey []byte, amount uint64) error {
+func (a *App) TransferCoin(receiverAddress string, amount uint64) error {
 	ctx := context.Background()
 
 	// check if account exists
@@ -34,7 +34,7 @@ func (a *App) TransferCoin(receiverAddress string, receiverPubKey []byte, amount
 	// if not, create a new one
 	if !existing {
 		// create account
-		if err := a.createAccountTx(ctx, receiverPubKey); err != nil {
+		if err := a.createAccountTx(ctx, receiverAddress); err != nil {
 			return fmt.Errorf("failed to create account: %w", err)
 		}
 	}
@@ -69,8 +69,11 @@ func (a *App) isExistingAccount(ctx context.Context, address string) (bool, erro
 	return true, nil
 }
 
-func (a *App) createAccountTx(ctx context.Context, targetPubKey []byte) error {
-	authKey := crypto.SingleSignerAuthKey(targetPubKey)
+func (a *App) createAccountTx(ctx context.Context, address string) error {
+	authKey, err := models.HexToAccountAddress(address)
+	if err != nil {
+		return fmt.Errorf("failed to hex encoding(%s): %w", address, err)
+	}
 
 	seqNum, err := a.getEscrowSeqNum(ctx)
 	if err != nil {

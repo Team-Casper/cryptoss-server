@@ -81,8 +81,6 @@ func (a *App) InitializeRoutes() {
 	router.HandleFunc("/reset", a.HandleResetAccount).Methods(http.MethodPost)
 	router.HandleFunc("/profile", a.HandleSetProfile).Methods(http.MethodPost)
 
-	//a.TestAA()
-
 	a.Srv = &http.Server{
 		Handler:      router,
 		Addr:         a.Conf.ListeningAddr,
@@ -105,39 +103,4 @@ func (a *App) GracefulShutdown() error {
 	defer cancel()
 
 	return a.Srv.Shutdown(ctxTimeout)
-}
-
-func (a *App) TestAA() {
-	ctx := context.Background()
-	//resources, err := a.AptosCli.GetAccountResources(ctx, a.EscrowAcc.Address)
-	//if err != nil {
-	//	panic(err)
-	//}
-
-	//log.Infof("resources: %v", resources[3].Data.Coin)
-	tokenClient, err := client.NewTokenClient(a.AptosCli)
-	if err != nil {
-		panic(err)
-	}
-
-	NFTs, err := tokenClient.ListAccountTokens(ctx, a.EscrowAcc.Signer.AccountAddress)
-	if err != nil {
-		panic(err)
-	}
-
-	log.Infof("NFT ID : %v", NFTs[0].ID)
-
-	creator, _ := models.HexToAccountAddress(NFTs[0].ID.Creator)
-	collection := NFTs[0].ID.Collection
-	tokenName := NFTs[0].ID.Name
-	collenctionData, err := tokenClient.GetTokenData(ctx, creator, collection, tokenName)
-	if err != nil {
-		panic(err)
-	}
-
-	log.Infof("creator: %v", creator)
-	log.Infof("collection: %v", collection)
-	log.Infof("token name: %v", tokenName)
-
-	log.Infof("token data: %v", collenctionData)
 }
